@@ -1,0 +1,74 @@
+# CUDA 编程教程 Makefile
+# 用于编译所有教程示例
+
+NVCC = nvcc
+CFLAGS = -O3 -std=c++11
+DEBUG_FLAGS = -g -G -lineinfo
+
+# 所有教程目标
+TUTORIAL_TARGETS = hello_cuda vector_add thread_indexing matrix_multiply \
+                   shared_memory memory_management error_handling \
+                   reduce all_reduce gather all_gather
+
+# 默认目标：编译所有教程
+all: $(TUTORIAL_TARGETS)
+
+# 编译规则
+hello_cuda: 01_hello_cuda.cu
+	$(NVCC) $(CFLAGS) $< -o $@
+
+vector_add: 02_vector_add.cu
+	$(NVCC) $(CFLAGS) $< -o $@
+
+thread_indexing: 03_thread_indexing.cu
+	$(NVCC) $(CFLAGS) $< -o $@
+
+matrix_multiply: 04_matrix_multiply.cu
+	$(NVCC) $(CFLAGS) $< -o $@
+
+shared_memory: 05_shared_memory.cu
+	$(NVCC) $(CFLAGS) $< -o $@
+
+memory_management: 06_memory_management.cu
+	$(NVCC) $(CFLAGS) $< -o $@
+
+error_handling: 07_error_handling.cu
+	$(NVCC) $(CFLAGS) $< -o $@
+
+reduce: 08_reduce.cu
+	$(NVCC) $(CFLAGS) $< -o $@
+
+all_reduce: 09_all_reduce.cu
+	$(NVCC) $(CFLAGS) $< -o $@
+
+gather: 10_gather.cu
+	$(NVCC) $(CFLAGS) $< -o $@
+
+all_gather: 11_all_gather.cu
+	$(NVCC) $(CFLAGS) $< -o $@
+
+# 调试版本
+debug: CFLAGS += $(DEBUG_FLAGS)
+debug: $(TUTORIAL_TARGETS)
+
+# 清理
+clean:
+	rm -f $(TUTORIAL_TARGETS)
+
+# 运行所有示例（需要用户交互，所以只是显示命令）
+run-all:
+	@echo "运行所有教程示例："
+	@echo "./hello_cuda"
+	@echo "./vector_add"
+	@echo "./thread_indexing"
+	@echo "./matrix_multiply"
+	@echo "./shared_memory"
+	@echo "./memory_management"
+	@echo "./error_handling"
+	@echo "./reduce"
+	@echo "./all_reduce"
+	@echo "./gather"
+	@echo "./all_gather"
+
+.PHONY: all debug clean run-all
+
